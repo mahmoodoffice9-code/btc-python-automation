@@ -5,11 +5,12 @@ from http.server import BaseHTTPRequestHandler
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
-            url = "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+            # CoinCap public API (Cloud friendly)
+            url = "https://api.coincap.io/v2/assets/bitcoin"
             response = requests.get(url)
             data = response.json()
             
-            btc_price = data.get("price", "N/A")
+            btc_price = data.get("data", {}).get("priceUsd", "N/A")
             
             result = {
                 "status": "success",
