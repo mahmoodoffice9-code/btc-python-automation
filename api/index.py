@@ -5,12 +5,14 @@ from http.server import BaseHTTPRequestHandler
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
-            # CoinCap public API (Cloud friendly)
-            url = "https://api.coincap.io/v2/assets/bitcoin"
-            response = requests.get(url)
+            # CoinGecko reliable API with User-Agent header
+            url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            
+            response = requests.get(url, headers=headers, timeout=10)
             data = response.json()
             
-            btc_price = data.get("data", {}).get("priceUsd", "N/A")
+            btc_price = data.get("bitcoin", {}).get("usd", "N/A")
             
             result = {
                 "status": "success",
