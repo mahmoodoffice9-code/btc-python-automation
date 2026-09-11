@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "source": "api/btc_rate.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "destination": "api/btc_rate.py"
+    }
+  ]
+}
